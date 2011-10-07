@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Matt Good]]></title>
-  <link href="http://blog.matt-good.net/atom.xml" rel="self"/>
-  <link href="http://blog.matt-good.net/"/>
-  <updated>2011-10-07T08:21:28-04:00</updated>
-  <id>http://blog.matt-good.net/</id>
+  <link href="http://mgood.github.com/atom.xml" rel="self"/>
+  <link href="http://mgood.github.com/"/>
+  <updated>2011-10-07T08:36:32-04:00</updated>
+  <id>http://mgood.github.com/</id>
   <author>
     <name><![CDATA[Matt Good]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Released jprops library]]></title>
-    <link href="http://blog.matt-good.net/2011/10/07/released-jprops"/>
+    <link href="http://mgood.github.com/2011/10/07/released-jprops"/>
     <updated>2011-10-07T02:15:00-04:00</updated>
-    <id>http://blog.matt-good.net/2011/10/07/released-jprops</id>
+    <id>http://mgood.github.com/2011/10/07/released-jprops</id>
     <content type="html"><![CDATA[<p>I&#8217;ve uploaded a new Python library <a href="http://mgood.github.com/jprops/">jprops</a> to
 GitHub.  It reads and writes Java&#8217;s <a href="http://download.oracle.com/javase/6/docs/api/java/util/Properties.html">.properties</a>
 file format.</p>
@@ -48,9 +48,9 @@ If it&#8217;s missing something <a href="https://github.com/mgood/jprops/issues"
   
   <entry>
     <title type="html"><![CDATA[Migrated to Octopress]]></title>
-    <link href="http://blog.matt-good.net/2011/10/07/migrated-to-octopress"/>
+    <link href="http://mgood.github.com/2011/10/07/migrated-to-octopress"/>
     <updated>2011-10-07T02:03:00-04:00</updated>
-    <id>http://blog.matt-good.net/2011/10/07/migrated-to-octopress</id>
+    <id>http://mgood.github.com/2011/10/07/migrated-to-octopress</id>
     <content type="html"><![CDATA[<p>Created a new blog using <a href="http://octopress.org">Octopress</a>.  Will be migrating in old posts in a bit.</p>
 ]]></content>
   </entry>
