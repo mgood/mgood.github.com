@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://mgood.github.com/2011/10/07/migrated-to-octopress</loc>
+        <loc>http://blog.matt-good.net/2011/10/07/migrated-to-octopress</loc>
         <lastmod>2011-10-07T02:07:45-04:00</lastmod>
     </url>
     <url>
-        <loc>http://mgood.github.com/2011/10/07/released-jprops</loc>
+        <loc>http://blog.matt-good.net/2011/10/07/released-jprops</loc>
         <lastmod>2011-10-07T02:40:42-04:00</lastmod>
     </url>
     <url>
-        <loc>http://mgood.github.com/blog/archives/</loc>
+        <loc>http://blog.matt-good.net/blog/archives/</loc>
         <lastmod>2011-10-07T02:40:42-04:00</lastmod>
     </url>
     <url>
-        <loc>http://mgood.github.com/</loc>
+        <loc>http://blog.matt-good.net/</loc>
         <lastmod>2011-10-07T02:40:42-04:00</lastmod>
     </url>
 </urlset>
