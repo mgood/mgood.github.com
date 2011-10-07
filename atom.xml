@@ -4,7 +4,7 @@
   <title><![CDATA[Matt Good]]></title>
   <link href="http://mgood.github.com/atom.xml" rel="self"/>
   <link href="http://mgood.github.com/"/>
-  <updated>2011-10-07T02:10:06-04:00</updated>
+  <updated>2011-10-07T02:41:12-04:00</updated>
   <id>http://mgood.github.com/</id>
   <author>
     <name><![CDATA[Matt Good]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Released jprops library]]></title>
+    <link href="http://mgood.github.com/2011/10/07/released-jprops"/>
+    <updated>2011-10-07T02:15:00-04:00</updated>
+    <id>http://mgood.github.com/2011/10/07/released-jprops</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve uploaded a new Python library <a href="http://mgood.github.com/jprops/">jprops</a> to
+GitHub.  It reads and writes Java&#8217;s <a href="http://download.oracle.com/javase/6/docs/api/java/util/Properties.html">.properties</a>
+file format.</p>
+
+<p>We were using <a href="http://pypi.python.org/pypi/pyjavaproperties">pyjavaproperties</a>
+at work, but ran into a few limitations.  One of our developers had patched it
+to be able to read from a <code>StringIO</code> object instead of a <code>file</code> object.  I had
+also encountered an issue where it has extended the standard property parsing
+to interpolate patterns like <code>{var}</code> to expand the value of <code>var</code> as a
+reference to another property.  This interfered with some of our properties
+files that use <code>${var}</code> as a pattern recognized by our configuration system.</p>
+
+<p>Since pyjavaproperties was also missing some other features like unicode
+support I decided to go ahead and read over the the Java documentation of
+the file format and build a new cleanroom implementation.  I have a decent
+set of <a href="https://github.com/mgood/jprops/blob/master/test_jprops.py">unit tests</a>
+and I think this implementation should cover all of the features documented in
+the spec.  It has full support for reading and writing unicode values, though it
+it will return Python <code>str</code> objects by default when your key or value contains
+only ASCII.  This was more convenient, but I may revisit that to always return
+<code>unicode</code> or have a switch for that behavior.</p>
+
+<p>So, if you need to work with Java .properties files from Python, just
+<code>pip install jprops</code> and <a href="http://mgood.github.com/jprops/">check out the docs</a>.
+If it&#8217;s missing something <a href="https://github.com/mgood/jprops/issues">let me know</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Migrated to Octopress]]></title>

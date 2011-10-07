@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Matt Good</title>
+  <title>Category: python - Matt Good</title>
   <meta name="author" content="Matt Good">
 
   
-  <meta name="description" content="I&#8217;ve uploaded a new Python library jprops toGitHub.  It reads and writes Java&#8217;s .propertiesfile format.We were using pyjavapropertiesat...">
+  <meta name="description" content="Category: python">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mgood.github.com/">
+  <link rel="canonical" href="http://mgood.github.comblog/categories/python/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -58,109 +58,40 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article role="article">
   
-  
-  
-    <article>
-      
   <header>
-    
-      <h1 class="entry-title"><a href="/2011/10/07/released-jprops">Released Jprops Library</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-  
-
-
-
-<time datetime="2011-10-07T02:15:00-04:00" pubdate  data-updated="true" >Oct 7<span>th</span>, 2011</time>
-        
-      </p>
+    <h1 class="entry-title">Category: Python</h1>
     
   </header>
+  
+  <div id="blog-archives" class="category">
 
 
-  <div class="entry-content"><p>I&#8217;ve uploaded a new Python library <a href="http://mgood.github.com/jprops/">jprops</a> to
-GitHub.  It reads and writes Java&#8217;s <a href="http://download.oracle.com/javase/6/docs/api/java/util/Properties.html">.properties</a>
-file format.</p>
 
-<p>We were using <a href="http://pypi.python.org/pypi/pyjavaproperties">pyjavaproperties</a>
-at work, but ran into a few limitations.  One of our developers had patched it
-to be able to read from a <code>StringIO</code> object instead of a <code>file</code> object.  I had
-also encountered an issue where it has extended the standard property parsing
-to interpolate patterns like <code>{var}</code> to expand the value of <code>var</code> as a
-reference to another property.  This interfered with some of our properties
-files that use <code>${var}</code> as a pattern recognized by our configuration system.</p>
+  
+  <h2>2011</h2>
 
-<p>Since pyjavaproperties was also missing some other features like unicode
-support I decided to go ahead and read over the the Java documentation of
-the file format and build a new cleanroom implementation.  I have a decent
-set of <a href="https://github.com/mgood/jprops/blob/master/test_jprops.py">unit tests</a>
-and I think this implementation should cover all of the features documented in
-the spec.  It has full support for reading and writing unicode values, though it
-it will return Python <code>str</code> objects by default when your key or value contains
-only ASCII.  This was more convenient, but I may revisit that to always return
-<code>unicode</code> or have a switch for that behavior.</p>
+<article>
+  
+<h1><a href="/2011/10/07/released-jprops">Released jprops library</a></h1>
+<time datetime="2011-10-07T02:15:00-04:00" pubdate><span class='month'>Oct</span> <span class='day'>07</span> <span class='year'>2011</span></time>
 
-<p>So, if you need to work with Java .properties files from Python, just
-<code>pip install jprops</code> and <a href="http://mgood.github.com/jprops/">check out the docs</a>.
-If it&#8217;s missing something <a href="https://github.com/mgood/jprops/issues">let me know</a>.</p>
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/python/'>python</a></span>
+</footer>
+
+
+</article>
+
 </div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/10/07/migrated-to-octopress">Migrated to Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
 
   
+</article>
 
-
-
-<time datetime="2011-10-07T02:03:00-04:00" pubdate  data-updated="true" >Oct 7<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Created a new blog using <a href="http://octopress.org">Octopress</a>.  Will be migrating in old posts in a bit.</p>
 </div>
-  
-  
 
-
-    </article>
-  
-  <nav class="pagination">
-    <div>
-      
-      <a href="/blog/archives">Blog Archives</a>
-      
-    </div>
-  </nav>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -181,7 +112,7 @@ If it&#8217;s missing something <a href="https://github.com/mgood/jprops/issues"
 <section>
   <h1>Github Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/mgood">@mgood</a> on Github
@@ -212,6 +143,7 @@ If it&#8217;s missing something <a href="https://github.com/mgood/jprops/issues"
 
   
 </aside>
+
 
     </div>
   </div>
