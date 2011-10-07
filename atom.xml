@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Matt Good]]></title>
+  <link href="http://mgood.github.com/atom.xml" rel="self"/>
+  <link href="http://mgood.github.com/"/>
+  <updated>2011-10-07T02:10:06-04:00</updated>
+  <id>http://mgood.github.com/</id>
+  <author>
+    <name><![CDATA[Matt Good]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Migrated to Octopress]]></title>
+    <link href="http://mgood.github.com/2011/10/07/migrated-to-octopress"/>
+    <updated>2011-10-07T02:03:00-04:00</updated>
+    <id>http://mgood.github.com/2011/10/07/migrated-to-octopress</id>
+    <content type="html"><![CDATA[<p>Created a new blog using <a href="http://octopress.org">Octopress</a>.  Will be migrating in old posts in a bit.</p>
+]]></content>
+  </entry>
+  
+</feed>
