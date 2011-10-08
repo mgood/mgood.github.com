@@ -1,0 +1,834 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Matt Good</title>
+  <meta name="author" content="Matt Good">
+
+  
+  <meta name="description" content="The guys from Divmod were here at PyCon and todaythe gave a little talk about their service.The basic functionality of their site is to provide a w...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mgood.github.com/blog/page/4/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Matt Good" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Good</a></h1>
+  
+    <h2>Random musings on code & other stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mgood.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/03/26/Divmod">Divmod</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-03-26T02:08:32Z" pubdate  data-updated="true" >Mar 26<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The guys from <a href="http://divmod.com">Divmod</a> were here at PyCon and today
+the gave a little talk about their service.</p>
+
+<p>The basic functionality of their site is to provide a way to collect
+your email, rss, calendars, etc. into one place and they&#8217;ll catalog it
+for easy searching and relating the information together.</p>
+
+<p>They also provide VoIP service and can keep a log of your calls which is
+tied into the same address book information from your email, etc.
+Apparently they&#8217;ll soon be able to let you specify rules about different
+people trying to contact you, so that email or calls from certain people
+are important and always go through, or others can get directed to voice
+mail. This can even be set up to be on a schedule so that people could
+only get in contact with you during business hours, or other similar
+rules.</p>
+
+<p>The thing that I found most interesting is that they&#8217;re working on
+determining information about references to dates for scheduling
+appointments. They claim that they&#8217;ll be able to pick up on phrases like
+&#8220;next Thursday&#8221; and determine prompt you if you want to create an
+appointment about the meeting that you were discussing.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/03/25/Roundup">Roundup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-03-25T05:18:36Z" pubdate  data-updated="true" >Mar 25<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today at <a href="http://pycon.org/dc2005/">PyCon</a> I went to the talk on the
+<a href="http://roundup.sf.net/">Roundup Issue Tracker</a> to see what I could
+learn from them for use in <a href="http://projects.edgewall.com/trac">Trac</a>.</p>
+
+<p>One thing that I realized would be good is to add a QuickStart document
+for getting the built-in tracd up and running with minimal
+configuration. As the Trac user base is growing, the installation
+questions are growing. I think that there are still going to be a lot of
+people who want to use Trac via Apache. However, I think that if people
+can get tracd up and running quickly there will be less people that get
+stuck with nothing running. This should give them a chance to play with
+Trac a bit, rather than getting hung up on the Apache config right at
+the beginning and asking a bunch of questions that they&#8217;d figure out on
+their own in a minute if they had a running Trac server.</p>
+
+<p>The feature of Roundup that seemed interesting is their use of email for
+issue reporting and discussion. This has been requested in Trac several
+times, but I haven&#8217;t yet seen a good proposal on the format these emails
+should have. I liked that Roundup would use the CC list on emails to add
+new people to the so-called &#8220;nosy&#8221; list that is notified of changes.</p>
+
+<p>Roundup also supports <a href="http://lists.edgewall.com/archive/trac/2004-December/001371.html">hook scripts</a>
+similar to the idea I proposed on the Trac mailing list. I think that
+this would be a nice way to provide extension points for customizing the
+Trac event model.</p>
+
+<p>During the talk I had decided I wasn&#8217;t going to bring up Trac, since I
+didn&#8217;t really want to come across as rude by promoting a competing
+application. However, during the Q&amp;A time following the talk someone
+asked about Subversion integration. Richard (Rick?) indicated that he
+thought you could write some shell scripts, etc. to tie the two
+together, but didn&#8217;t have a really good answer. So, of course at that
+point I had to put in a little plug for Trac. Some of the Mac people
+were taking notes on
+<a href="http://www.codingmonkeys.de/subethaedit/">SubEthaEdit</a> and put the site
+URL up on there, so I&#8217;m hoping some people will check it out.</p>
+
+<p>Best quote of the conference:</p>
+
+<blockquote><p>When all you have is a hammer screws are stupid</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/02/20/Lemmings">Lemmings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-02-20T22:28:42Z" pubdate  data-updated="true" >Feb 20<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Well, this space has been dead for a long time now. So, in order to
+resurrect it I&#8217;ll post <a href="http://www.inkstain.net/fleck/archives/001577.html">this meme</a>.</p>
+
+<blockquote><ol>
+<li>Grab the nearest book.</li>
+<li>Open the book to page 123.</li>
+<li>Find the fifth sentence.</li>
+<li>Post the text of the sentence in your journal along with these
+instructions.</li>
+<li>Don&#8217;t search around and look for the &#8220;coolest&#8221; book you can find.
+Do what&#8217;s actually next to you.</li>
+</ol>
+</blockquote>
+
+<p>And here it is:</p>
+
+<blockquote><p>You now have a powerful weapon at your disposal; the slightest nick
+from this device will disintigrate an enemy.</p></blockquote>
+
+<p>It just so happens that the one book that happened to be sitting on my
+desk was a strategy guide for
+<a href="http://www.sierra.com/product.do?gamePlatformId=285">No One Lives Forever</a>.
+At this point in the game, herione Cate Archer finds herself a nifty laser.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/05/09/Posting_with_Dasher">Posting With Dasher</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2004-05-09T04:00:00Z" pubdate  data-updated="true" >May 9<span>th</span>, 2004</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I decided to try writing an entire post in
+<a href="http://www.inference.phy.cam.ac.uk/dasher/">Dasher</a> just to see how
+easy it was to use. Dasher is an alternative way to enter text on the
+computer. It is mainly geared towards use in small devices where a
+keyboard would take too much space, or for people with a disability
+which prevents them from using a keyboard. The Dasher program included
+with Gnome 2.6 consists of a text box at the top showing what you have
+typed and the Dasher input area at the bottom. Dasher is controlled
+simply by moving the mouse cursor. Letters appear on the right side of
+the screen in colored boxes. These boxes are scaled in proportion to the
+how likely you are to choose them.</p>
+
+<p>Typing in Dasher feels a bit like playing a video game. As you move the
+mouse, you sort of steer towards the letters you want to type. The boxes
+containing the letters grow as you move towards them and boxes for
+following letters appear inside the existing ones. Since Dasher uses a
+language model to predict the probability of each subsequent letter, the
+word you intend to type begins to appear on the right side of the
+screen. This feature seems to work quite well since it doesn&#8217;t just look
+for any word that begins with the letters you have typed,but it also
+considers the context of the sentence you are writing. Dasher even seems
+to learn as you type. For example, the first time I wrote the word
+&#8220;Dasher&#8221; it took a little tricky maneuvering, but the subsequent times
+it became much easier to type.</p>
+
+<p>Dasher even helps you spell words since the letters for the correct
+spelling will appear much larger. However, I don&#8217;t knowhow quickly
+Dasher would learn an incorrect spelling that would throw it off in the
+future. Once you get used to the navigation in Dasher it feels quite
+natural and you can turn up the speed it moves at to type at a quite
+reasonable pace.</p>
+
+<p>Of course, Dasher is not without problems. The most frustrating one is
+that it will freeze up periodically on my computer. I have an Athlon XP
+2000+, so it&#8217;s much faster than the handheld systems the software is
+supposed to be usable on. I&#8217;ll have to look into this to see what&#8217;s
+going on.</p>
+
+<p>Also, it would be useful to have Dasher operate in a way that it could
+be used to input text directly into any program. Users can copy text
+from Dasher into another program, but if text could be input directly
+into a word processor the user would be able to take advantage of other
+features such as the real-time spell checking.</p>
+
+<p>I should also note that Dasher includes training text for a variety of
+languages, so users that don&#8217;t speak English will be able to take full
+advantage of the software right away without taking time to train it
+themselves. I may try training it on Python, or HTML to see how easily
+it adapts. Although I had never written anything in Dasher before
+writing this post, I can already type fairly fast in it, but it would
+probably be quite difficult to code in it since my thoughts don&#8217;t really
+tend to flow as linearly when I&#8217;m programming and Dasher isn&#8217;t
+particularly well suited towards jumping around and editing text.
+However, I will admit that it was much more fun writing this post in
+Dasher than it would be typing it out normally. It feels kind of like
+the computer is reading your mind when you can see the words you were
+thinking of appear on the screen before you even begin to enter them.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/05/08/Anybody_from_Utah_">Anybody From Utah?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2004-05-08T05:15:28Z" pubdate  data-updated="true" >May 8<span>th</span>, 2004</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Please, I&#8217;m begging you, get Sen. Orrin Hatch out of office as soon as
+possible. This man is completely out of touch with reality. He&#8217;s already
+introduced a bill that exempts the music industry for antitrust suits so
+that they can dictate royalties on music downloads without fear of
+repercussions and now he&#8217;s trying to pile more crap on this bill.</p>
+
+<p>Hatch wants to strengthen the <a href="http://hatch.senate.gov/index.cfm?FuseAction=PressReleases.Detail&amp;PressRelease_id=946&amp;Month=11&amp;Year=2003">EnFORCE Act</a>
+to give the record companies more power to dictate royalties on
+&#8220;innovative forms of physical phonorecords, like enhanced compact disks
+and DVD audio disks&#8221;. Specifically they want to start releasing
+double-sided CDs where one side is a normal audio CD and the other side
+is an SACD or DVD-audio. And guess what? They want to charge separate
+royalties for each format on the disc. So, either the distributers have
+to be willing to take a cut in their profit margin to sell these
+products, or they&#8217;ll have to charge you as much for the dual-format
+version as you would pay to buy the two versions separately.</p>
+
+<p>Now I understand that the record labels want to make as much money as
+they can get, but why is the government <em>promoting</em> monopolistic
+practices? You would think that with all the uproar over the corporate
+corruption cases and the Microsoft antitrust suits that people would
+take notice of the fact that we have senators pushing through
+legislation that &#8220;will expand an existing antitrust exemption.&#8221;
+Capitalism thrives on competition. Once you eliminate the competition it
+hurts consumers.</p>
+
+<p>On a weird note this quote is also in Hatch&#8217;s statement (emphasis
+added):</p>
+
+<blockquote><p>The bill also requires the Department of Justice to report to Congress
+detailed information about the scope of its efforts to investigate and
+prosecute <em>crimes involving the sexual exploitation of minors or
+intellectual property.</em></p></blockquote>
+
+<p><strong>Zuh?!?!?</strong> I mean how do you sexually exploit intellectual property?
+Ok, that was dumb. Honestly though, this is the only time he talks about
+sexual exploitation of minors so it seems fairly blatant that it was
+just thrown in as a way to make the bill more palatable. How can you
+oppose a bill that&#8217;s trying to strengthen prosecution of crimes
+involving the sexual exploitation of minors?</p>
+
+<p><a href="http://www.dieselsweeties.com/archive.php?s=946">meh</a></p>
+
+<hr />
+
+<p>If you couldn&#8217;t tell I&#8217;m pretty frustrated with the state of the music
+industry. Here are some useful links for avoiding the RIAA.</p>
+
+<ul>
+<li><a href="http://www.magnetbox.com/riaa/">RIAA Radar</a> ~ Search for artists or albums
+  to see if they&#8217;re distributed by the RIAA</li>
+<li><a href="http://www.boycott-riaa.com/">Boycott RIAA</a> ~ Guess.</li>
+<li><a href="http://emusic.com/">eMusic</a> ~ Subscription-based music download service. All
+  songs are standard MP3s, no DRM, and they&#8217;re from independent labels. The
+  <code>:30</code> previews of songs are available without a subscription, or you can
+  get a free trial period to check it out.</li>
+<li><a href="http://www.epitonic.com/">Epitonic</a> ~ Download or stream select full tracks
+  from a variety of (generally) independent musicians.</li>
+<li><a href="http://creativecommons.org/">Creative Commons</a> ~ <em>Some Rights Reserved.</em>
+  Copyright licenses which support the sharing of ideas.</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/05/04/Squarepusher_Pics">Squarepusher Pics</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2004-05-04T03:14:07Z" pubdate  data-updated="true" >May 4<span>th</span>, 2004</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Well, I found out that Naku from <a href="http://applegeeks.com">Applegeeks</a> was
+also at the Squarepusher concert! She was nice enough to send me some
+<a href="http://matt-good.net/pictures/squarepusher/">pictures</a> she took.</p>
+
+<p>Thanks Naku</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/05/04/DMCA_Infringements">DMCA Infringements</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2004-05-04T01:16:00Z" pubdate  data-updated="true" >May 4<span>th</span>, 2004</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>The notice clearly states that Comcast has been asked by the copyright
+owner to tell the individual of their actions and demand that the
+downloaded file(s) be immediately removed. In addition, the individual
+must write a return letter, which consists of an explanation and/or an
+apology.</p></blockquote>
+
+<p>Well, <a href="http://aorula.com/2004_05_01_archive.php#108356004494418547">this guy</a>
+misread the <a href="http://aorula.com/images/20040503/Comcast_Doc.jpg">letter</a>,
+then some other moron
+<a href="http://yro.slashdot.org/article.pl?sid=04/05/03/1315232&amp;amp;mode=thread&amp;amp;tid=123&amp;amp;tid=158&amp;amp;tid=99">submitted it to Slashdot</a>
+without reading it and, as often happens, the person who actually took
+the time to read the letter and pointed out the mistake didn&#8217;t get their
+post in until way down in the comments.</p>
+
+<p>Of course, I made the same mistake when I first got a similar letter
+(s/Comcast/Cox/g; s/MGM/Warner/g; s/Walking Tall/Matchstick Men/g) a
+couple months ago. No, you&#8217;re not forced to write an apology. The
+confusing section about writing a response only applies if they made a
+mistake and the file that you are sharing isn&#8217;t really the movie they
+think it is. You can write them and let them know that they made a
+mistake so that you can continue sharing the file.</p>
+
+<p>I just modded down the moron who said <a href="http://yro.slashdot.org/comments.pl?sid=106196&amp;amp;cid=9040512">&#8220;I don&#8217;t remember anything about being guilty until proven innocent.&#8221;</a>
+Someone did point out the fallacy in this guy&#8217;s claim, but this troll
+still got modded +5 Insightful. <strong>Comcast != US court</strong> they can
+terminate your service if they feel like it. If Comcast had actually
+forced a written apology, or tried to impose a fine or something this
+might be a reasonable response.</p>
+
+<p>Now, some may claim that Comcast/Cox/etc. shouldn&#8217;t just go along with
+the MPAA like this. Of course if they didn&#8217;t, then the MPAA would be
+forced to file lawsuits and subpoena the ISP for the information
+anyways. As it is, you get off with a warning and they don&#8217;t piss off
+everyone like the RIAA did. I guess the ISPs don&#8217;t have to go through
+the legal hassle either. So, it&#8217;s not such a bad idea if you ask me.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/05/01/It_s_Official">It&#8217;s Official</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2004-05-01T22:24:09Z" pubdate  data-updated="true" >May 1<span>st</span>, 2004</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Well, I&#8217;m happy with my CSS and I&#8217;ve posted my first real article, so
+I&#8217;m considering the blog officially open. Does anyone but me care? I
+have no idea, but that&#8217;s beside the point.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/05/01/Unclogging_RSS_Bandwidth">Unclogging RSS Bandwidth</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2004-05-01T21:33:00Z" pubdate  data-updated="true" >May 1<span>st</span>, 2004</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://wired.com">Wired</a>&#8217;s article
+<a href="http://www.wired.com/news/infostructure/0,1377,63264,00.html">Will RSS Readers Clog the Web?</a>
+starts off with some interesting points about the bandwidth problems with
+aggregators, but I don&#8217;t really agree with some of their conclusions.</p>
+
+<p>Like stated in the article, it&#8217;s definitely important for aggregators to
+support time-stamp checking to make sure they don&#8217;t keep grabbing the
+same feed over and over. Of course the flip-side is it&#8217;s also important
+for servers to be able to provide this information. Pyblosxom (which
+powers this blog) doesn&#8217;t seem to have this ability.</p>
+
+<p>One of my problems with the article is that they don&#8217;t mention that
+grabbing an RSS feed is most likely going to consume less bandwidth than
+loading the page in a browser.</p>
+
+<blockquote><p>Whereas a human reader may scan headlines on The New York Times
+website once a day, aggregators check the site hourly or even more
+frequently.</p></blockquote>
+
+<p>While this may be true for some people, I imagine that these are not the
+people who are using aggregators. Before using a feed reader I would
+check sites like Slashdot repeatedly during the day for updates. Using
+an aggregator I can check the site less frequently now since I only need
+to visit it when I see an article I&#8217;m interested in.</p>
+
+<p>I decided to do a little math to figure out how the bandwidth compares
+between loading the RSS and the actual page. Slashdot&#8217;s RSS feed is
+weighing in at 1.9K. Now this didn&#8217;t really seem fair since it&#8217;s only
+the titles. Adding in the story bodies shown on the front page brings it
+up to 9.1K. Updating once an hour gives us 218.4K per day.</p>
+
+<p>So how does that compare to reading the front page. Well, to be
+conservative I&#8217;ll assume that your browser has cached all the images and
+is only loading the HTML, which comes to &#8230; <strong>63K!</strong> So, if I read
+Slashdot&#8217;s front page 4 or more times a day I&#8217;m using more bandwidth
+than if I was using an RSS feed that contained the article content. (To
+be fair Slashdot could really benefit from a
+<a href="http://www.alistapart.com/articles/slashdot/">CSS-based overhaul</a>,
+but that&#8217;s for a different article)</p>
+
+<p>Ok, so I&#8217;m just going to assume that there are sites out there where RSS
+is eating up their bandwidth. Wired (or at least some of the people they
+talked to) seem to think P2P would help alleviate these problems. I&#8217;m
+not so sure I agree with this solution. While protocols like
+<a href="http://bitconjurer.org/BitTorrent/">BitTorrent</a> can reduce the strain
+of file distribution on a server, they&#8217;re really best at distributing
+large files. There is an overhead when distributing files via P2P with
+distributing the information about what peers are available for each
+requested file (and what portions of the file they have, etc.). This may
+not be too bad when you&#8217;re distributing files that are a few megs or
+more, but with RSS we&#8217;re only looking at maybe 10K. I haven&#8217;t figured
+out the numbers, but it seems like it would be quite hard to make the
+overhead of P2P small enough to justify using it for RSS distribution.</p>
+
+<p>Now, I don&#8217;t understand why Wired has ignored the
+<a href="http://blogs.law.harvard.edu/tech/soapMeetsRss#rsscloudInterface">RSS Cloud</a>
+specification. This allows an aggregator to subscribe to a feed only
+once a day. Then, the server sends a notification to the aggregator when
+new content is published (thus publish/subscribe). This would allow
+aggregators to only refresh the content when it had been updated,
+eliminating the redundant updates. I&#8217;d also like to see this implemented
+more since it would also give more timely notification of updates.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/04/30/GPS_Drawing">GPS Drawing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2004-04-30T01:09:00Z" pubdate  data-updated="true" >Apr 30<span>th</span>, 2004</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I <a href="http://matt-good.net/blog/music/Pushing_Squares.html">mentioned</a>
+wanting to see the GPS tracing of my path through DC I wasn&#8217;t aware of
+<a href="http://www.gpsdrawing.com/gallery.htm">this</a>.</p>
+
+<p>(link courtesy of <a href="http://www.bbspot.com">BBspot</a>)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <nav class="pagination">
+    <div>
+      
+        <a class="prev" href="/blog/page/5/">&larr; Older</a>
+      
+      <a href="/blog/archives">Blog Archives</a>
+      
+      <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+      
+    </div>
+  </nav>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/10/07/released-jprops">Released jprops library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/10/07/migrated-to-octopress">Migrated to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/05/31/javascript-namespaces">Simple JavaScript Namespaces</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2007/08/28/safari-3">Safari 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2007/08/05/scripts-svndiff">Scripts: svndiff</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/mgood">@mgood</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mgood',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - Matt Good -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26180810-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

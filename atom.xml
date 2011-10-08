@@ -4,7 +4,7 @@
   <title><![CDATA[Matt Good]]></title>
   <link href="http://mgood.github.com/atom.xml" rel="self"/>
   <link href="http://mgood.github.com/"/>
-  <updated>2011-10-07T10:01:17-04:00</updated>
+  <updated>2011-10-08T02:32:48-04:00</updated>
   <id>http://mgood.github.com/</id>
   <author>
     <name><![CDATA[Matt Good]]></name>
@@ -52,6 +52,521 @@ If it&#8217;s missing something <a href="https://github.com/mgood/jprops/issues"
     <updated>2011-10-07T02:03:00-04:00</updated>
     <id>http://mgood.github.com/2011/10/07/migrated-to-octopress</id>
     <content type="html"><![CDATA[<p>Created a new blog using <a href="http://octopress.org">Octopress</a>.  Will be migrating in old posts in a bit.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Simple JavaScript Namespaces]]></title>
+    <link href="http://mgood.github.com/2009/05/31/javascript-namespaces"/>
+    <updated>2009-05-31T19:52:00Z</updated>
+    <id>http://mgood.github.com/2009/05/31/javascript-namespaces</id>
+    <content type="html"><![CDATA[<blockquote><p>Namespaces are one honking great idea — let&#8217;s do more of those!</p><footer><strong>Tim Peters</strong><cite>The Zen of Python</cite></footer></blockquote>
+
+
+<p>After a few years of mostly server-side development I&#8217;m getting back
+into JavaScript, and for the first time I feel like I&#8217;m approaching it
+as an actual engineering challenge rather than a bunch of quick hacks.
+As our JS code base is growing I&#8217;m breaking things up into namespaces to
+keep things manageable.</p>
+
+<p>Though JavaScript has no built-in notion of &#8220;modules&#8221; like many other
+languages you can use objects to create namespaces, which in their
+simplest form would look something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">util</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">my_func</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;my_func&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nx">util</span><span class="p">.</span><span class="nx">my_func</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, creating nested namespaces like &#8220;myapp.util.text&#8221; gets a bit
+ugly with that approach. I liked the basic API of
+<a href="http://code.google.com/p/namespacedotjs/">Namespace.js</a>, though I
+didn&#8217;t want any of the additional features like remote loading, so I
+figured I could make something much simpler and smaller.</p>
+
+<p>You can first &#8220;declare&#8221; a namespace and then assign attributes like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">Namespace</span><span class="p">(</span><span class="s1">&#39;myapp.ui&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">myapp</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">ToggleButton</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// ...</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or pass in the attributes to include in that namespace:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">Namespace</span><span class="p">(</span><span class="s1">&#39;myapp.util.text&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">some_func</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&#8217;s the code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">Namespace</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">parts</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span>
+</span><span class='line'>      <span class="nx">ns</span> <span class="o">=</span> <span class="nb">window</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="c1">// find the deepest part of the namespace</span>
+</span><span class='line'>  <span class="c1">// that is already defined</span>
+</span><span class='line'>  <span class="k">for</span><span class="p">(;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">parts</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="k">in</span> <span class="nx">ns</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">ns</span> <span class="o">=</span> <span class="nx">ns</span><span class="p">[</span><span class="nx">parts</span><span class="p">[</span><span class="nx">i</span><span class="p">]];</span>
+</span><span class='line'>  <span class="c1">// initialize any remaining parts of the namespace</span>
+</span><span class='line'>  <span class="k">for</span><span class="p">(;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">ns</span> <span class="o">=</span> <span class="nx">ns</span><span class="p">[</span><span class="nx">parts</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>  <span class="c1">// copy the attributes into the namespace</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">attr</span> <span class="k">in</span> <span class="nx">attributes</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">ns</span><span class="p">[</span><span class="nx">attr</span><span class="p">]</span> <span class="o">=</span> <span class="nx">attributes</span><span class="p">[</span><span class="nx">attr</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is of course <em>much</em> smaller than the 16kb of Namespace.js, so as an
+additional challenge I decided see if I could compact it to fit the 140
+character limit of a <a href="http://twitter.com/matt_good/status/1599936506">Twitter status message</a> :)
+<em>(Note: the Twitter version used jQuery&#8217;s $.extend function to copy the attributes
+into the namespace which I later replaced with the framework-independent
+version above.)</em></p>
+
+<p>I&#8217;ll follow up later with some tricks I&#8217;ve been thinking about to
+&#8220;import&#8221; stuff from other namespaces.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Safari 3]]></title>
+    <link href="http://mgood.github.com/2007/08/28/safari-3"/>
+    <updated>2007-08-28T13:55:17Z</updated>
+    <id>http://mgood.github.com/2007/08/28/safari-3</id>
+    <content type="html"><![CDATA[<p>I think I&#8217;ve tried just about every web browser available for the Mac.
+The included Safari 2 didn&#8217;t feel quite right, Firefox was too slow and
+a memory hog, Flock, Shiira and some others just didn&#8217;t really fit what
+I was looking for. Camino was nice and light, and better integrated with
+the Mac than Firefox, but I was missing a good search box and it felt a
+little too limited in features. Now I&#8217;m using the Safari 3 beta and
+couldn&#8217;t be happier. There are lots of little things that just feel
+&#8220;right&#8221; and it fits with the Mac OS nicely. After downloading an
+application you are warned that it contains an app, and if you approve
+the DMG file is mounted so you can run or install the app. But, the one
+thing that seems simple, but I&#8217;ve felt missing in browsers for a while
+is the tab management. On Linux I used Epiphany which has supported
+rearranging tabs for a while, and Firefox now supports it, but Safari
+gets one more thing right: dragging tabs between windows. So far I
+haven&#8217;t seen another browser do this, but in Safari you can drag a tab
+up or down to detach it from the current window and either drag it to a
+different window, or out into a new window. It&#8217;s not a feature I use
+constantly, but I do really like being able to keep my tabs organized in
+a logical manner instead of having a random assortment of tabs all open
+in the same window. Thanks Apple for getting this right.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Scripts: svndiff]]></title>
+    <link href="http://mgood.github.com/2007/08/05/scripts-svndiff"/>
+    <updated>2007-08-05T16:24:00Z</updated>
+    <id>http://mgood.github.com/2007/08/05/scripts-svndiff</id>
+    <content type="html"><![CDATA[<p>To make the output of the &#8220;svn diff&#8221; command more readable here&#8217;s a
+small script to pipe the output to the <a href="http://pygments.org">Pygments</a>
+library to colorize the command line output:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>svn diff <span class="s2">&quot;$@&quot;</span> | pygmentize -ldiff
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Industrial Design]]></title>
+    <link href="http://mgood.github.com/2007/05/02/industrial-design"/>
+    <updated>2007-05-02T12:14:27Z</updated>
+    <id>http://mgood.github.com/2007/05/02/industrial-design</id>
+    <content type="html"><![CDATA[<p>For April 1st ThinkGeek presented us with <a href="http://www.thinkgeek.com/stuff/41/lebedev.shtml">this wonderful device</a>:</p>
+
+<p><img src="http://www.thinkgeek.com/images/products/front/vilcus_plug.jpg" alt="Vilcus Plug Dactyloadapter" /></p>
+
+<p>However, this product was created by another industrial design company
+that has a lot of extremely creative products, such as this
+<a href="http://www.artlebedev.com/everything/mabbila/interface/">phone with rotation aware clock display</a>:</p>
+
+<p><img src="http://img.artlebedev.com/everything/mabbila/interface/001-1.jpg" alt="Mabbila Phone" /></p>
+
+<p>Unfortunately many of their products are only produced in small runs, so
+availability is limited. However, it&#8217;s worth browsing their
+<a href="http://www.artlebedev.com/everything/id/">industrial design catalog</a>
+to see some of the cool ideas.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mac Migration (part 1)]]></title>
+    <link href="http://mgood.github.com/2007/05/01/mac-migration-part-1"/>
+    <updated>2007-05-01T13:42:25Z</updated>
+    <id>http://mgood.github.com/2007/05/01/mac-migration-part-1</id>
+    <content type="html"><![CDATA[<p>A week ago I started my new job at <a href="http://youtube.com">YouTube</a>. Most
+people here use Macs so I got a nice shiny new MacBook Pro to work on.
+I&#8217;ve been using Linux (<a href="http://debian.org">Debian</a> and
+<a href="http://ubuntu.com">Ubuntu</a>) almost exclusively for about 4 years now
+and Windows before that, so I&#8217;ve been quickly getting up to speed on
+using my new Mac.</p>
+
+<p>One of my first major annoyances was that some form controls weren&#8217;t
+keyboard navigable. Filling out web forms was frustrating since hitting
+Tab would skip past drop-down fields, and when dialogs popped up and I
+didn&#8217;t want to respond with the default button I had to switch over to
+the mouse instead of just tabbing to the right one.</p>
+
+<p>Fortunately I found these <a href="http://www.tonyspencer.com/2006/05/02/tab-skips-select-form-fields-in-mac-browsers/">instructions on changing this behavior</a>.
+Now I can use the keyboard to quickly navigate these inputs.</p>
+
+<p>More on my Mac switch to come.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PyCon Trac Presentation]]></title>
+    <link href="http://mgood.github.com/2007/02/28/pycon-trac-presentation"/>
+    <updated>2007-02-28T19:08:20Z</updated>
+    <id>http://mgood.github.com/2007/02/28/pycon-trac-presentation</id>
+    <content type="html"><![CDATA[<p>Here are the materials from my PyCon Trac presentation:</p>
+
+<ul>
+<li><a href="http://matt-good.net/files/software-dev-with-trac/software_development.html">HTML slides</a></li>
+<li><a href="http://matt-good.net/files/software-dev-with-trac/software_development.rst">reStructuredText source</a></li>
+<li><a href="http://matt-good.net/files/software-dev-with-trac/rst2s5">rst2s5 modified for code coloring</a></li>
+</ul>
+
+
+<p>The modified rst2s5 script requires
+<a href="http://pygments.pocoo.org">Pygments</a> for coloring the example code.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PythongPaste]]></title>
+    <link href="http://mgood.github.com/2007/02/27/pythongpaste"/>
+    <updated>2007-02-27T08:51:31Z</updated>
+    <id>http://mgood.github.com/2007/02/27/pythongpaste</id>
+    <content type="html"><![CDATA[<p>Ian Bicking has just added a new package to the Paste suite for WSGI utilities</p>
+
+<!--more-->
+
+
+<p><a href="http://pythonpaste.org"><img src="http://matt-good.net/files/post-related/pythongpaste.gif" alt="PythongPaste" /></a></p>
+
+<p>P.S. see <a href="http://pythong.org">the page that started it all</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu package for Germanium]]></title>
+    <link href="http://mgood.github.com/2007/02/04/ubuntu-package-for-germanium"/>
+    <updated>2007-02-04T00:17:08Z</updated>
+    <id>http://mgood.github.com/2007/02/04/ubuntu-package-for-germanium</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve built an Ubuntu Edgy package for Germanium. It may work on Dapper,
+or Debian versions, but I haven&#8217;t tested it on any of those yet. I think
+the dependencies should be covered, but if you find any problems you can
+<a href="http://projects.matt-good.net/trac/emusic-gnome/newticket">open a ticket</a>.</p>
+
+<p><strong>Download:</strong>
+  ~ <a href="http://packages.matt-good.net/germanium_0.2.0-0ubuntu1_all.deb">germanium_0.2.0-0ubuntu1_all.deb</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Germanium 0.2.0 Released]]></title>
+    <link href="http://mgood.github.com/2007/02/03/germanium-0-2-0-released"/>
+    <updated>2007-02-03T03:07:00Z</updated>
+    <id>http://mgood.github.com/2007/02/03/germanium-0-2-0-released</id>
+    <content type="html"><![CDATA[<p>Germanium 0.2.0 features better GNOME integration including mime
+handling for .emp files and a GConf schema, keyboard shortcuts, as well
+as album art display, and optionally saving album art with the tracks.</p>
+
+<p><strong>Download:</strong>
+  ~ <a href="http://matt-good.net/files/releases/germanium/germanium-0.2.0.tar.gz">emusic-gnome-0.2.0.tar.gz</a></p>
+
+<p><strong>Darcs:</strong></p>
+
+<pre><code>darcs get --tag=0.2.0 http://projects.matt-good.net/darcs/emusic-gnome/
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Trac Nominated for Linux User Awards]]></title>
+    <link href="http://mgood.github.com/2006/10/16/trac-nominated-for-linux-user-awards"/>
+    <updated>2006-10-16T19:56:03Z</updated>
+    <id>http://mgood.github.com/2006/10/16/trac-nominated-for-linux-user-awards</id>
+    <content type="html"><![CDATA[<p><a href="http://trac.edgewall.org">Trac</a> has been nominated in the
+<a href="http://linuxawards.co.uk">Linux User Awards</a> for &#8220;Best Linux/OSS Developer Tool&#8221;.
+<a href="http://launchpad.net">Launchpad</a> and <a href="http://mono-project.com">Mono</a>
+are the other nominations in this category, so we&#8217;re among some pretty
+big competition. The Trac community has grown tremendously in the past
+year, so it&#8217;s nice to see that it&#8217;s so highly regarded.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Daily Show: Not "Fake News"]]></title>
+    <link href="http://mgood.github.com/2006/10/13/the-daily-show-not-fake-news"/>
+    <updated>2006-10-13T23:02:40Z</updated>
+    <id>http://mgood.github.com/2006/10/13/the-daily-show-not-fake-news</id>
+    <content type="html"><![CDATA[<p>Indiana University conducted a study of Comedy Central&#8217;s &#8220;The Daily Show
+with Jon Stewart&#8221; comparing the amount of actual content in their
+coverage of the 2004 elections in comparison to &#8220;real&#8221; news shows.
+Regular watchers of The Daily Show will not be surprised to find that
+there was no significant difference in the amount of political content
+offered by the humor show.</p>
+
+<p>The Daily Show has quite often ridiculed the rediculous topics covered
+by &#8220;real&#8221; new programs such as those on CNN, MSNBC, and Fox News. These
+shows are no less padded with &#8220;entertainment&#8221; than The Daily Show,
+though they lack the witty satire offered by Jon Stewart and his team of
+writers.</p>
+
+<p>So, don&#8217;t feel guilty about relying on The Daily Show to stay informed.
+You not only get a good source of news, but some good laughs as well.</p>
+
+<p><a href="http://newsinfo.iu.edu/news/page/normal/4159.html">Read the press release from Indiana University</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Moleskine]]></title>
+    <link href="http://mgood.github.com/2006/10/12/moleskine"/>
+    <updated>2006-10-12T19:28:26Z</updated>
+    <id>http://mgood.github.com/2006/10/12/moleskine</id>
+    <content type="html"><![CDATA[<p>Like many others in the tech community I&#8217;ve been getting into the
+<a href="http://gtdbook.43folders.com/">Getting Things Done</a> fad. Since I use
+the computer a lot I&#8217;ve been using some different computer-based systems
+for tracking my next actions. These are good, but they don&#8217;t help when
+I&#8217;m out and forget things I should be shopping for, or have an idea that
+I need to record.</p>
+
+<p>So, the other day at the book store I saw a shelf of
+<a href="http://moleskine.com">Moleskine</a> notebooks and picked up a pack of 3
+small lined journals. I&#8217;ve divided one up with Post-it
+<a href="http://www.3m.com/us/office/postit/products/prod_ft_dur.html">Durable Tabs</a> into
+6 contexts, clipped on a pen and I keep it in my pocket. The Post-it
+tabs are really nice. They should hold up to being stuffed in a pocket
+without getting bent and the adhesive will peel up without tearing the
+paper, so you can reposition them later if you need to resize the
+sections. A fine-point felt-tipped marker works best for labelling them;
+ball-point pen didn&#8217;t show up very well.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[eMusic GNOME Project]]></title>
+    <link href="http://mgood.github.com/2006/08/24/emusic-gnome-project"/>
+    <updated>2006-08-24T05:14:24Z</updated>
+    <id>http://mgood.github.com/2006/08/24/emusic-gnome-project</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve put up a <a href="http://projects.matt-good.net/trac/emusic-gnome">Trac project</a>
+for eMusic GNOME where you can file bugs or enhancement requests.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[eMusic GNOME 0.1.1]]></title>
+    <link href="http://mgood.github.com/2006/08/23/emusic-gnome-0-1-1"/>
+    <updated>2006-08-23T00:14:00Z</updated>
+    <id>http://mgood.github.com/2006/08/23/emusic-gnome-0-1-1</id>
+    <content type="html"><![CDATA[<p>Unsurprisingly the 0.1 release was not bug-free.</p>
+
+<p><strong>Changes:</strong></p>
+
+<ul>
+<li>Fix missing import found by Huw Lynes</li>
+<li>Fix bug with &#8220;/&#8221; characters in filenames found by Huw Lynes</li>
+<li>Implement the &#8220;strip special characters&#8221; setting for removing
+non-shell-friendly characters</li>
+<li>capitalize GNOME</li>
+</ul>
+
+
+<p><strong>Download:</strong>
+  ~ <a href="http://matt-good.net/files/releases/emusic-gnome/emusic-gnome-0.1.1.tar.gz">emusic-gnome-0.1.1.tar.gz</a></p>
+
+<p><strong>Darcs:</strong></p>
+
+<pre><code>darcs get --tag=0.1.1 http://projects.matt-good.net/darcs/emusic-gnome/
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[eMusic Gnome 0.1]]></title>
+    <link href="http://mgood.github.com/2006/08/22/emusic-gnome-0-1"/>
+    <updated>2006-08-22T20:27:00Z</updated>
+    <id>http://mgood.github.com/2006/08/22/emusic-gnome-0-1</id>
+    <content type="html"><![CDATA[<p>The first release is done, go download it:
+  ~ <a href="http://matt-good.net/files/releases/emusic-gnome/emusic-gnome-0.1.tar.gz">emusic-gnome-0.1.tar.gz</a></p>
+
+<p><strong>Update:</strong> I&#8217;ve made a <a href="http://matt-good.net/2006/08/22/emusic-gnome-0-1-1/">0.1.1
+release</a> due to a
+couple crasher bugs.</p>
+
+<p>Check the README for requirements and installation.</p>
+
+<p><img src="http://matt-good.net/files/post-related/emusic-gnome-0.1.png" alt="image" />
+<img src="http://matt-good.net/files/post-related/emusic-gnome-0.1-prefs.png" alt="image" /></p>
+
+<p><strong>Current Features:</strong></p>
+
+<ul>
+<li>open .emp files from the toolbar or on the command-line</li>
+<li>stop/start downloads</li>
+<li>progress meters show estimated time remaining</li>
+<li>preferences dialog based on <a href="http://www.burtonini.com/blog/computers/sound-juicer">Sound Juicer</a>
+for setting the download location and file naming</li>
+<li>GnomeVFS support</li>
+</ul>
+
+
+<p><strong>Source Repository:</strong></p>
+
+<p>The source is available via <a href="http://abridgegame.org/darcs/">Darcs</a>:</p>
+
+<pre><code>darcs get http://projects.matt-good.net/darcs/emusic-gnome/
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[eMusic Downloader]]></title>
+    <link href="http://mgood.github.com/2006/08/21/emusic-downloader"/>
+    <updated>2006-08-21T16:14:26Z</updated>
+    <id>http://mgood.github.com/2006/08/21/emusic-downloader</id>
+    <content type="html"><![CDATA[<p><strong>Update:</strong> I&#8217;ve made a <a href="http://matt-good.net/2006/08/22/emusic-gnome-0-1/">first
+release</a> so go check
+it out.</p>
+
+<p>Hadess recently mentioned the <a href="http://www.hadess.net/?start=639">crappy eMusic Linux
+client</a> which I stopped using long ago
+and resorted to downloading the tracks individually in my browser. There
+is <a href="http://www.kallisti.net.nz/EMusicJ/HomePage">eMusic/J</a> which was
+written out of spite for the Linux client, but I try to avoid running
+Java apps as much as possible.</p>
+
+<p>So, I decided it was time to sit down and make a nice eMusic client for
+Linux. Poking at the eMusic/J source led me to
+<a href="http://wannabehacker.com/src/decrypt-emp.pl">decrypt-emp</a> where they
+got the function for decoding eMusic&#8217;s &#8220;.emp&#8221; files. The emp decoding
+was easily ported to Python, and after learning a little PyGTK I&#8217;ve got
+a halfway decent prototype:</p>
+
+<p><img src="http://matt-good.net/files/post-related/emusic-downloader.png" alt="image" /></p>
+
+<p>Stay tuned for a release. There are a couple things I need to fix, but
+the basic functionality should be ready shortly.</p>
+
+<p><strong>Features planned for the near future:</strong></p>
+
+<ul>
+<li>display album art and extra track info</li>
+<li>use DBus to append tracks to the currently open instance</li>
+<li>show download progress in
+<a href="http://tw.apinc.org/weblog/2006/08/13">Mathusalem</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Silver Lining]]></title>
+    <link href="http://mgood.github.com/2006/08/11/silver-lining"/>
+    <updated>2006-08-11T19:23:05Z</updated>
+    <id>http://mgood.github.com/2006/08/11/silver-lining</id>
+    <content type="html"><![CDATA[<p>Sunday my laptop&#8217;s harddrive crashed. Everything had been working fine.
+Then I sat down and was getting some weird errors running things on the
+command line. I decided to reboot and it was gone; completely
+unrecognized by the system. It seemed like professional recovery was the
+only option and was far out of my price range. I&#8217;d heard putting the
+harddrive in the freezer would sometimes get it running long enough to
+backup critical data, but no such luck. So, I finally gave up and order
+a new drive.</p>
+
+<p>In addition to now having a larger drive, reinstalling
+<a href="http://ubuntu.com">Ubuntu</a> has my system running more smoothly than
+before. Hibernate was working out of the box and following some
+<a href="http://parrenin.frederic.free.fr/DellLatitudeD800/linux-DellLatitudeD800.html">simple instructions</a>
+I was able to switch to the accelerated Nvidia driver and maintain the
+working hibernate feature.</p>
+
+<p>Also, I was attempting to redownload GTDTiddlyWiki Plus, which seems to
+have disappeared. In the process of looking for it I discovered another
+<a href="http://gtd.43folders.com/">GTD</a>-customization of TiddlyWiki:
+<a href="http://tiddlyspot.com/monkeygtd/">MonkeyGTD</a>. It&#8217;s a bit more
+structured than GTDTiddlyWiki (Plus). It makes heavy use of tags to
+organize your contexts and tasks and seems to integrate a bunch of
+plugins to make managing tasks much simpler. So, at least in the process
+of recovering from the drive failure I&#8217;ve gotten a few benefits.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Disappearing Neighbors]]></title>
+    <link href="http://mgood.github.com/2006/07/25/disappearing-neighbors"/>
+    <updated>2006-07-25T00:04:05Z</updated>
+    <id>http://mgood.github.com/2006/07/25/disappearing-neighbors</id>
+    <content type="html"><![CDATA[<p>I recently signed up with <a href="http://www.last.fm/">Last.fm</a>
+(<a href="http://www.last.fm/user/matt_good/">my profile</a>).</p>
+
+<p>After my first week it generated a list of &#8220;neighbors&#8221; that shared my
+musical tastes. Now after another week it updated my listening charts
+again, and deleted my neighbors list! I guess I confused it from
+starting off with <a href="http://www.flaminglips.com/">The Flaming Lips</a>,
+<a href="http://www.ween.com/">Ween</a>, and <a href="http://www.forlauren.com/">Lauren Hoffman</a>
+topping my list, to <a href="http://www.emusic.com/artist/11486/11486161.html">MF DOOM</a>,
+<a href="http://illegalart.net/girltalk/">Girl Talk</a>, and
+<a href="http://www.emusic.com/artist/11644/11644960.html">CunninLynguists</a> the
+next week.</p>
+
+<p>I guess it might take a little time for Last.fm to figure out my musical
+tastes.</p>
+
+<p><strong>Update:</strong> Either I was impatient, or Last.fm is reading my blog. I
+have a new set of neighbors now. Girl Talk&#8217;s &#8220;Night Ripper&#8221; was
+definitely <em>the</em> album to listen to last week. Girl Talk is the top
+weekly artist for most of my neighbors, and it&#8217;s the top mover on the
+Last.fm charts at 500%.</p>
 ]]></content>
   </entry>
   

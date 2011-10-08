@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>svn_apply_autoprops.py - Matt Good</title>
+  <meta name="author" content="Matt Good">
+
+  
+  <meta name="description" content="Subversion includes a contrib script svn_apply_autoprops.py that scans yourauto-propssettings and applies them to a working copy. These are normall...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mgood.github.com/2005/12/23/new-and-improved-svn-apply-autoprops-py-now-with-more-svk">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Matt Good" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Good</a></h1>
+  
+    <h2>Random musings on code & other stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mgood.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">svn_apply_autoprops.py</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-12-23T17:06:05Z" pubdate  data-updated="true" >Dec 23<span>rd</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Subversion includes a contrib script <code>svn_apply_autoprops.py</code> that scans your
+<a href="http://svnbook.red-bean.com/en/1.1/ch07s02.html#svn-ch-7-sect-2.4">auto-props</a>
+settings and applies them to a working copy. These are normally applied
+to files you add to the repository, but this script is useful if you
+have added new properties, or other users have added files without
+configuring the desired properties. However, since I use
+<a href="http://svk.elixus.org/">SVK</a> this script didn&#8217;t work for me. I looked
+at the script to see if I could convert it to use SVK instead, but it
+was relying on the <code>.svn</code> folders to try to determine what directories to scan
+and I didn&#8217;t like the fact that they were parsing the config by hand with
+regular expressions instead of using the extremely useful
+<a href="http://docs.python.org/lib/module-ConfigParser.html">ConfigParser</a>
+module.</p>
+
+<p>I decided it would be quicker to rewrite the script than to fix up the
+existing one, so here is the new and improved version:
+<a href="http://matt-good.net/files/post-related/svn_apply_autoprops.py">svn_apply_autoprops.py</a></p>
+
+<p>Key features include:</p>
+
+<p>Faster
+  ~ This version is about twice as fast as the old one on the several</p>
+
+<pre><code>repositories I've tested. The old version walked the directory
+structure for each pattern to find matching files. This version uses
+`svn status -v` to find all the versioned files once and simply scans this
+list to find the matching files.
+</code></pre>
+
+<p>Simpler
+  ~ Using the <code>ConfigParser</code> and simplifying the directory scanning made this</p>
+
+<pre><code>new version about 1/2 the code of the old one.
+</code></pre>
+
+<p>SVK
+  ~ There&#8217;s a variable that is defined at the top of the script to</p>
+
+<pre><code>determine which command is used: `svn` or `svk`. Both support the same
+arguments needed by this script and are easily interchangeable.
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-12-23T17:06:05Z" pubdate  data-updated="true" >Dec 23<span>rd</span>, 2005</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mgood.github.com/2005/12/23/new-and-improved-svn-apply-autoprops-py-now-with-more-svk" data-via="" data-counturl="http://mgood.github.com/2005/12/23/new-and-improved-svn-apply-autoprops-py-now-with-more-svk" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/10/07/released-jprops">Released jprops library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/10/07/migrated-to-octopress">Migrated to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/05/31/javascript-namespaces">Simple JavaScript Namespaces</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2007/08/28/safari-3">Safari 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2007/08/05/scripts-svndiff">Scripts: svndiff</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mgood">@mgood</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mgood',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - Matt Good -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26180810-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

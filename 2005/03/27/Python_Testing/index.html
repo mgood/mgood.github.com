@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python Testing - Matt Good</title>
+  <meta name="author" content="Matt Good">
+
+  
+  <meta name="description" content="I just finished my first major use of Python testing tools. I just wrotea patch for Trac to addgroups support to itsfine grained permissions.As I s...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mgood.github.com/2005/03/27/Python_Testing">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Matt Good" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Good</a></h1>
+  
+    <h2>Random musings on code & other stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mgood.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python Testing</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-03-27T08:06:21Z" pubdate  data-updated="true" >Mar 27<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I just finished my first major use of Python testing tools. I just wrote
+a patch for <a href="http://projects.edgewall.com/trac">Trac</a> to add
+<a href="http://projects.edgewall.com/trac/ticket/1366">groups support</a> to its
+<a href="http://projects.edgewall.com/trac/wiki/FineGrainedPermissions">fine grained permissions</a>.</p>
+
+<p>As I started writing the patch I was having trouble wrapping my head
+around all the different possibilities for conflicting rules and how
+they should take precedence. I started testing a few of them by hand,
+but I quickly realized that making sure that I covered all the scenarios
+was going to be difficult. Thankfully there were some examples in the
+code for using
+<a href="http://docs.python.org/lib/module-doctest.html">doctest</a>.</p>
+
+<p>Once I had figured out a couple of things about using doctest, I found
+it was the first testing tool I&#8217;ve actually enjoyed using. Doctest
+allows you to write your tests as basic textual documentation, then
+insert snippets from the Python command line. Doctest will run the
+command line sections and make sure that the output matches the
+document. This makes it incredibly easy to write tests, and the tests
+are quite readable and useful as examples.</p>
+
+<p>On a sidenote, I got a complimentary copy of the
+<a href="http://www.oreilly.com/catalog/pythoncook/">Python Cookbook</a> today. They
+contacted me a while back about using some submissions I had made on the
+cookbook website, but when they released the list of included recipies
+none of my submissions seemed to be included, so I wasn&#8217;t expecting to
+receive a copy of the book. I actually considered picking up a copy at
+PyCon, but now I&#8217;m glad I waited.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Matt</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-03-27T08:06:21Z" pubdate  data-updated="true" >Mar 27<span>th</span>, 2005</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mgood.github.com/2005/03/27/Python_Testing" data-via="" data-counturl="http://mgood.github.com/2005/03/27/Python_Testing" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/10/07/released-jprops">Released jprops library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/10/07/migrated-to-octopress">Migrated to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/05/31/javascript-namespaces">Simple JavaScript Namespaces</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2007/08/28/safari-3">Safari 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2007/08/05/scripts-svndiff">Scripts: svndiff</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mgood">@mgood</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mgood',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - Matt Good -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26180810-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,885 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Matt Good</title>
+  <meta name="author" content="Matt Good">
+
+  
+  <meta name="description" content="If browsers worked as they should it would be pretty simple to disablesome of the options in a select list:1234&lt;select&gt;    &lt;option&gt;Enab...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mgood.github.com/blog/page/3/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Matt Good" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Matt Good</a></h1>
+  
+    <h2>Random musings on code & other stuff</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mgood.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/17/disabling-html-option-s">Disabling HTML &lt;option&gt;s</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2006-05-17T03:30:54Z" pubdate  data-updated="true" >May 17<span>th</span>, 2006</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If browsers worked as they should it would be pretty simple to disable
+some of the options in a select list:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;select&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;option&gt;</span>Enabled<span class="nt">&lt;/option&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;option</span> <span class="na">disabled</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/option&gt;</span>
+</span><span class='line'><span class="nt">&lt;/select&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Of course IE doesn&#8217;t support this part of the spec, and it&#8217;s not
+included in the IE 7 beta, so it&#8217;s unlikely it will be supported in the
+near future. So, one option that makes IE behave similarly to the
+disabled options is to <a href="http://www.inquirium.net/blog/archives/archive_2006-m03.php#e157">replace them with &lt;optgroup> tags</a>.
+The &lt;optgroup>s cannot be selected and with a little CSS they look like
+disabled options. However, the static solution suggested didn&#8217;t work for
+me since I needed to be able to disable or enable options at runtime.
+So, with a little JavaScript (and the help of
+<a href="http://mochikit.com/">MochiKit</a>&#8217;s DOM functions) the options can be
+enabled or disabled dynamically:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">selectStyleDisabled</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">select</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">forEach</span><span class="p">(</span><span class="nx">select</span><span class="p">.</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">opt</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">opt</span><span class="p">.</span><span class="nx">disabled</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">optgroup</span> <span class="o">=</span> <span class="nx">OPTGROUP</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">updateNodeAttributes</span><span class="p">(</span><span class="nx">optgroup</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">label</span><span class="o">:</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">style</span><span class="o">:</span> <span class="p">{</span> <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;graytext&#39;</span> <span class="p">}});</span>
+</span><span class='line'>            <span class="nx">optgroup</span><span class="p">.</span><span class="nx">_option</span> <span class="o">=</span> <span class="nx">opt</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">swapDOM</span><span class="p">(</span><span class="nx">opt</span><span class="p">,</span> <span class="nx">optgroup</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>    <span class="nx">forEach</span><span class="p">(</span><span class="nx">select</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;OPTGROUP&quot;</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">optgroup</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">option</span> <span class="o">=</span> <span class="nx">optgroup</span><span class="p">.</span><span class="nx">_option</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">option</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">option</span><span class="p">.</span><span class="nx">disabled</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">swapDOM</span><span class="p">(</span><span class="nx">optgroup</span><span class="p">,</span> <span class="nx">option</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">addLoadEvent</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">selects</span> <span class="o">=</span> <span class="nx">currentDocument</span><span class="p">().</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;SELECT&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">forEach</span><span class="p">(</span><span class="nx">selects</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">select</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">select</span><span class="p">.</span><span class="nx">_onfocus</span> <span class="o">=</span> <span class="nx">select</span><span class="p">.</span><span class="nx">onfocus</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">select</span><span class="p">.</span><span class="nx">onfocus</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">selectStyleDisabled</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_onfocus</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onfocus</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="nx">selectStyleDisabled</span><span class="p">(</span><span class="nx">select</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The display of disabled options is updated in the &#8220;onfocus&#8221; method to
+make sure that changes in the disabled state of the options is reflected
+before the &lt;select> is displayed again. Disabling options can be done
+directly to any of the option elements such as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">select</span><span class="p">.</span><span class="nx">options</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">disabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, a little care needs taken to re-enable options, since the
+&lt;optgroup>s aren&#8217;t in the &#8220;options&#8221; attribute of the &lt;select>. The
+original option needs reenabled by accessing it through the &#8220;_option&#8221;
+attribute added to the &lt;optgroup> element:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">// reenable all disabled options in standards-compliant browsers</span>
+</span><span class='line'><span class="nx">forEach</span><span class="p">(</span><span class="nx">select</span><span class="p">.</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">option</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">option</span><span class="p">.</span><span class="nx">disabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// reenable all disabled options in IE</span>
+</span><span class='line'><span class="nx">forEach</span><span class="p">(</span><span class="nx">select</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;OPTGROUP&quot;</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">optgroup</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">optgroup</span><span class="p">.</span><span class="nx">_option</span><span class="p">.</span><span class="nx">disabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To make sure that this IE hack only gets loaded in IE, put it in a .js
+file and wrap it in an IE conditional comment:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!--if lt IE 8]&gt;</span>
+</span><span class='line'><span class="c">&lt;script type=&quot;text/javascript&quot; src=&quot;select-ie-disabled-options.js&quot;&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="c">&lt;![endif]--&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/02/25/python-sql-commandline">Python SQL Commandline</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2006-02-25T19:56:00Z" pubdate  data-updated="true" >Feb 25<span>th</span>, 2006</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I hacked together a simple command line app in Python for running SQL
+using any installed DB-API driver.</p>
+
+<p>Usage depends on the arguments of the <code>connect()</code> method of your DB driver. For example:</p>
+
+<pre><code>python pysql.py psycopg "host=localhost dbname=mydb user=myuser password=mypassword"
+</code></pre>
+
+<p>or:</p>
+
+<pre><code>python pysql.py sqlite mysqlite.db
+</code></pre>
+
+<p>or with named parameters:</p>
+
+<pre><code>python pysql.py pymssql --host=localhost --user=sa --password=sapassword
+</code></pre>
+
+<p>Download: <a href="http://matt-good.net/files/post-related/pysql.py">pysql.py</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/01/04/fun-with-evolution-filters">Fun With Evolution Filters</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2006-01-04T03:49:09Z" pubdate  data-updated="true" >Jan 4<span>th</span>, 2006</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve fixed up a couple of things in
+<a href="http://www.gnome.org/projects/evolution/">Evolution</a> that have been
+irritating me for a while using filters to pipe the messages through
+external apps.</p>
+
+<p><strong>New message notification</strong></p>
+
+<p>I&#8217;ve wanted to have popup notifications when I get new messages, so I
+wrote a little Python script that parses the message and displays a
+summary using <a href="http://galago-project.org">Galago</a>:</p>
+
+<p><img src="http://matt-good.net/files/post-related/mail-notify.png" alt="image" /></p>
+
+<p><strong>Installation</strong></p>
+
+<ul>
+<li>Download Ka-Ping&#8217;s <a href="http://zesty.ca/python/scrape.py">scrape.py</a>
+library to somewhere on your <code>PYTHONPATH</code> (usually
+<code>/usr/lib/python2.4/site-packages</code>; change the version number if necessary)</li>
+<li>Download
+<a href="http://matt-good.net/files/post-related/mail-notify.py">mail-notify.py</a>
+and make it executable (<code>chmod a+x mail-notify.py</code>)</li>
+<li>Add your Evolution filter (use <code>Browse</code> to pick the file if it&#8217;s not on
+your <code>PATH</code>):</li>
+</ul>
+
+
+<p><img src="http://matt-good.net/files/post-related/mail-notify-filter.png" alt="image" /></p>
+
+<p><strong>Working spam filtering</strong></p>
+
+<p>Spam filtering in Evolution used to work, but in recent versions I have
+not seen it catch a single spam. At first it seemed like this was due to
+not having SpamAssassin installed. After installing that it starts the
+<code>spamd</code> process and thinks for a little bit when I try to mark messages as
+junk, but still nothing gets caught.</p>
+
+<p>So, I gave up on the built-in filtering and set up an Evolution filter
+using <a href="http://bogofilter.org/">Bogofilter</a>:</p>
+
+<p><img src="http://matt-good.net/files/post-related/bogo-filter.png" alt="image" /></p>
+
+<p>Unfortunately Evolution doesn&#8217;t provide a way to just specify a program
+to run when you click the <code>Junk</code> and <code>Not Junk</code> buttons, so I&#8217;m using
+<a href="http://spamtrainer.sf.net/">Spam Trainer</a> to train Bogofilter. You can drag
+messages from Evolution into Spam Trainer to mark them as &#8220;spam&#8221; or &#8220;ham&#8221;.</p>
+
+<p>Set your Spam Trainer preferences to use the Bogofilter program:</p>
+
+<p><img src="http://matt-good.net/files/post-related/bogo-prefs.png" alt="image" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/12/23/new-and-improved-svn-apply-autoprops-py-now-with-more-svk">svn_apply_autoprops.py</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-12-23T17:06:05Z" pubdate  data-updated="true" >Dec 23<span>rd</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Subversion includes a contrib script <code>svn_apply_autoprops.py</code> that scans your
+<a href="http://svnbook.red-bean.com/en/1.1/ch07s02.html#svn-ch-7-sect-2.4">auto-props</a>
+settings and applies them to a working copy. These are normally applied
+to files you add to the repository, but this script is useful if you
+have added new properties, or other users have added files without
+configuring the desired properties. However, since I use
+<a href="http://svk.elixus.org/">SVK</a> this script didn&#8217;t work for me. I looked
+at the script to see if I could convert it to use SVK instead, but it
+was relying on the <code>.svn</code> folders to try to determine what directories to scan
+and I didn&#8217;t like the fact that they were parsing the config by hand with
+regular expressions instead of using the extremely useful
+<a href="http://docs.python.org/lib/module-ConfigParser.html">ConfigParser</a>
+module.</p>
+
+<p>I decided it would be quicker to rewrite the script than to fix up the
+existing one, so here is the new and improved version:
+<a href="http://matt-good.net/files/post-related/svn_apply_autoprops.py">svn_apply_autoprops.py</a></p>
+
+<p>Key features include:</p>
+
+<p>Faster
+  ~ This version is about twice as fast as the old one on the several</p>
+
+<pre><code>repositories I've tested. The old version walked the directory
+structure for each pattern to find matching files. This version uses
+`svn status -v` to find all the versioned files once and simply scans this
+list to find the matching files.
+</code></pre>
+
+<p>Simpler
+  ~ Using the <code>ConfigParser</code> and simplifying the directory scanning made this</p>
+
+<pre><code>new version about 1/2 the code of the old one.
+</code></pre>
+
+<p>SVK
+  ~ There&#8217;s a variable that is defined at the top of the script to</p>
+
+<pre><code>determine which command is used: `svn` or `svk`. Both support the same
+arguments needed by this script and are easily interchangeable.
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/01/trac-0-9">Trac 0.9</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-11-01T05:08:01Z" pubdate  data-updated="true" >Nov 1<span>st</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&#8217;s been nearly a year since 0.8 was released, but after
+<a href="http://projects.edgewall.com/trac/query?status=closed&amp;milestone=0.9">resolving over 400 tickets</a>,
+some major refactoring, and adding
+<a href="http://projects.edgewall.com/trac/wiki/TracPlugins">plugin support</a> Trac 0.9 is
+finally available, so
+<a href="http://projects.edgewall.com/trac/wiki/TracDownload">get downloading!</a></p>
+
+<p>Once you&#8217;ve upgraded you&#8217;ll probably want to check out some plugins:</p>
+
+<ul>
+<li><a href="http://projects.edgewall.com/trac/wiki/WebAdmin">WebAdmin</a>
+  Everyone will probably want to install this. It adds a web interface
+  for those administrative tasks you used to use
+  <code>trac-admin</code> for, plus you can even use it to
+  install new plugins, or manage which components are enabled from
+  your existing plugins.</li>
+<li><a href="http://bitten.cmlenz.net/">Bitten</a>
+  Bitten is a &#8220;Continuous Integration&#8221; build server. It monitors your
+  code repository for updates and will automatically run build and
+  testing scripts to make sure you know when a build was broken. You
+  can run your builds on multiple target platforms and generate
+  historical graphs of unit test results and code coverage.</li>
+<li><a href="http://anciens.enib.fr/trac/public/wiki/TracLdap">LDAP Plugin</a>
+  I haven&#8217;t tried this one out yet, but it should be useful for
+  administrators that use LDAP to authenticate users, since it now
+  also allows you to manage permissions based on LDAP groups, or even
+  store Trac permission information directly in LDAP.</li>
+<li><a href="http://trac-hacks.swapoff.org/wiki/AccountManagerPlugin">Account Manager</a>
+  This is one that I wrote that allows users to register a new account. It
+  currently supports <code>htpasswd</code> or <code>htdigest</code> files, but it is extensible
+  for storing accounts in other formats.</li>
+<li><a href="http://trac-hacks.swapoff.org/wiki/plugin">Trac Hacks</a>
+  Trac Hacks is a site that offers hosting for Trac extensions and
+  will be a good place to look for new plugins, since hopefully the
+  development interest will grow now that the new release has been
+  made final.</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/07/20/trac-accountmanager-plugin">Trac AccountManager Plugin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-07-20T06:11:32Z" pubdate  data-updated="true" >Jul 20<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve repackaged my account management module as a plugin and uploaded it
+on <a href="http://trac-hacks.swapoff.org/wiki/AccountManagerPlugin">TracHacks</a>.</p>
+
+<p>Installation instructions are included in the README file in the source.
+It&#8217;s a pretty simple process: run setup.py to build the Egg and copy it
+into your Trac environment.</p>
+
+<p>The next step is to extend the webadmin interfaces to provide a frontend
+to configure the account manager settings.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/07/19/trac-gets-drop-in-plugin-support">Trac Drop-In Plugin Support</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-07-19T04:54:26Z" pubdate  data-updated="true" >Jul 19<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Well, <a href="http://peak.telecommunity.com/DevCenter/PythonEggs">PythonEggs</a>
+sounded like a neat idea, and now they&#8217;ve made it possible to turn
+Trac&#8217;s pluggable framework into a real plugin system. Simply stick your
+extensions into an Egg, create a &#8220;plugins&#8221; directory in your
+environment, and drop-in the file.</p>
+
+<p>Jonas is developing a webadmin module for Trac as a plugin, and I took
+his example and have repackaged my account management module. Turning it
+into a plugin was quite trivial, but there are a couple of other things
+I&#8217;d like to clean up tomorrow before I release it.</p>
+
+<p>The Trac documentation should be updated soon to explain how to make
+plugins.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/07/08/python-2-2-test">New Blog Software</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-07-08T05:04:38Z" pubdate  data-updated="true" >Jul 8<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Well, after hacking around a bit I&#8217;ve gotten
+<a href="http://snurf.bdash.net.nz/">Snurf</a> backported to Python 2.2 so that it
+will run on my host.</p>
+
+<p>Snurf writes out the blog to static HTML and RSS pages, which is kind of
+nice. I&#8217;ll have to check on turning on the comment capability, though
+I&#8217;ll need to decide how I want to do the templates for that.</p>
+
+<p><strong>Update:</strong> I&#8217;ve imported all my old posts from the previous PyBloxsom
+blog. Here&#8217;s the little Python script I wrote to convert them:
+<a href="http://matt-good.net/files/post-related/pybloxsom2snurf">pybloxsom2snurf</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/04/07/Python_Marketing">Python Marketing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-04-07T06:17:00Z" pubdate  data-updated="true" >Apr 7<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://matt-good.net/images/ruby_on_rails_trac.png" alt="Ruby on Rails Trac site" /></p>
+
+<p>(<a href="http://dev.rubyonrails.com/about_trac">http://dev.rubyonrails.com/about_trac</a>)</p>
+
+<p>Who needs Python marketing when Ruby On Rails runs their development
+site on a Python-based web application?</p>
+
+<p>For those not familiar with <a href="http://projects.edgewall.com/trac">Trac</a>
+it&#8217;s a combination of wiki and bug-tracking for software development
+projects. I use it at work and help out as a
+<a href="http://projects.edgewall.com/trac/wiki/MatthewGood">developer</a> on it in
+my spare time. And of course it&#8217;s all written in Python.</p>
+
+<p>I&#8217;m trying to convince the other developers that we should include the
+&#8220;Python Powered&#8221; logo as an easter egg in the next release. There&#8217;s
+nothing quite like having your competitor do your advertizing for you.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/03/27/Python_Testing">Python Testing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+  
+
+
+
+<time datetime="2005-03-27T08:06:21Z" pubdate  data-updated="true" >Mar 27<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I just finished my first major use of Python testing tools. I just wrote
+a patch for <a href="http://projects.edgewall.com/trac">Trac</a> to add
+<a href="http://projects.edgewall.com/trac/ticket/1366">groups support</a> to its
+<a href="http://projects.edgewall.com/trac/wiki/FineGrainedPermissions">fine grained permissions</a>.</p>
+
+<p>As I started writing the patch I was having trouble wrapping my head
+around all the different possibilities for conflicting rules and how
+they should take precedence. I started testing a few of them by hand,
+but I quickly realized that making sure that I covered all the scenarios
+was going to be difficult. Thankfully there were some examples in the
+code for using
+<a href="http://docs.python.org/lib/module-doctest.html">doctest</a>.</p>
+
+<p>Once I had figured out a couple of things about using doctest, I found
+it was the first testing tool I&#8217;ve actually enjoyed using. Doctest
+allows you to write your tests as basic textual documentation, then
+insert snippets from the Python command line. Doctest will run the
+command line sections and make sure that the output matches the
+document. This makes it incredibly easy to write tests, and the tests
+are quite readable and useful as examples.</p>
+
+<p>On a sidenote, I got a complimentary copy of the
+<a href="http://www.oreilly.com/catalog/pythoncook/">Python Cookbook</a> today. They
+contacted me a while back about using some submissions I had made on the
+cookbook website, but when they released the list of included recipies
+none of my submissions seemed to be included, so I wasn&#8217;t expecting to
+receive a copy of the book. I actually considered picking up a copy at
+PyCon, but now I&#8217;m glad I waited.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <nav class="pagination">
+    <div>
+      
+        <a class="prev" href="/blog/page/4/">&larr; Older</a>
+      
+      <a href="/blog/archives">Blog Archives</a>
+      
+      <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+      
+    </div>
+  </nav>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2011/10/07/released-jprops">Released jprops library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2011/10/07/migrated-to-octopress">Migrated to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/05/31/javascript-namespaces">Simple JavaScript Namespaces</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2007/08/28/safari-3">Safari 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2007/08/05/scripts-svndiff">Scripts: svndiff</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/mgood">@mgood</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mgood',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - Matt Good -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26180810-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
